@@ -1,35 +1,57 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// import { useState } from 'react';
+// import reactLogo from './assets/react.svg';
+// import viteLogo from '/vite.svg';
+// import './App.css';
+// import Navbar from './components/Navbar';
+// import Beranda from './components/Beranda';
+// import Fitur1 from './components/Fitur1';
+// import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-function App() {
-  const [count, setCount] = useState(0)
+// function App() {
+//   return (
+//     <div>
+//       <BrowserRouter>
+//         <Navbar />
+//         <Routes>
+//           <Route path="/" element={<Beranda />} />
+//           <Route path="/fitur1" element={<Fitur1 />} />
+//         </Routes>
+//       </BrowserRouter>
+//     </div>
+//   );
+// }
+
+// export default App;
+
+import React from 'react';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import Beranda from './components/Beranda';
+import Fitur1 from './components/Fitur1';
+import Navbar from './components/Navbar';
+
+// Komponen pembungkus biar bisa akses lokasi
+const Layout = () => {
+  const location = useLocation();
+
+  const hideNavbar = location.pathname === '/fitur1';
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      {!hideNavbar && <Navbar />}
+      <Routes>
+        <Route path="/" element={<Beranda />} />
+        <Route path="/fitur1" element={<Fitur1 />} />
+      </Routes>
     </>
-  )
-}
+  );
+};
 
-export default App
+const App = () => {
+  return (
+    <BrowserRouter>
+      <Layout />
+    </BrowserRouter>
+  );
+};
+
+export default App;
